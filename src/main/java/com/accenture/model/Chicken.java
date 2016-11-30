@@ -1,16 +1,10 @@
 package com.accenture.model;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -24,8 +18,20 @@ public class Chicken {
 	
 	@Column(name="chickenName")
 	private String chickenName;
-
 	
+	@Column(name="eggQty")
+	private int eggQty;
+
+	public Chicken(){};
+	
+	public int getEggQty() {
+		return eggQty;
+	}
+
+	public void setEggQty(int eggQty) {
+		this.eggQty = eggQty;
+	}
+
 	public String getChickenName() {
 		return chickenName;
 	}
@@ -33,22 +39,7 @@ public class Chicken {
 	public void setChickenName(String chickenName) {
 		this.chickenName = chickenName;
 	}
-
-	public Chicken(){}
-
 	
-	@OneToMany(mappedBy="chickenId", cascade=CascadeType.ALL , fetch=FetchType.EAGER)
-	private List<Egg> eggList = new ArrayList<Egg>();
-	
-	
-	public List<Egg> getEggList() {
-		return eggList;
-	}
-
-	public void setEggList(List<Egg> eggList) {
-		this.eggList = eggList;
-	}
-
 	public long getId() {
 		return id;
 	}

@@ -32,6 +32,22 @@ public class ChickenDAO {
 		return chickenList;
 	}
 	
+	public void addChicken(Chicken chicken){
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		session.save(chicken);
+		tx.commit();
+		session.close();		
+	}
+	
+	public void updateEgg(Chicken chicken){
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		session.update(chicken);
+		tx.commit();
+		session.close();		
+	}
+	
 	@Transactional
 	public void deleteChicken(Chicken chicken){
 		Session session = sessionFactory.openSession();

@@ -18,7 +18,7 @@ public class ChickenController {
 	@Autowired
 	ChickenDAO chickenDAO;
 	
-	@RequestMapping(path="/view/chickens", method=RequestMethod.GET)
+	@RequestMapping(path="FarmAjax/chickens", method=RequestMethod.GET)
 	public @ResponseBody List<Chicken> chickenList(){
 		List<Chicken> list = chickenDAO.chickenList();
 		return list;	
@@ -30,4 +30,24 @@ public class ChickenController {
 		chickenDAO.deleteChicken(chicken);
 	}
 	
+	@RequestMapping(path="/add/chickens", method=RequestMethod.POST)
+	public @ResponseBody Chicken addChicken(Chicken chicken){
+		chickenDAO.addChicken(chicken);
+		return chicken;
+	}
+	
+	@RequestMapping(path="/addEgg/{id}", method=RequestMethod.POST)
+	public @ResponseBody Chicken addEgg(@PathVariable String id){
+		Chicken chicken = chickenDAO.getChicken(Long.parseLong(id));
+		
+		int cantidad = chicken.getEggQty();
+		
+		int cantAgregada = 1;
+		cantidad += cantAgregada;
+		chicken.setEggQty(cantidad);
+		chickenDAO.updateEgg(chicken);
+		return chicken;
+	}
+	
+	 
 }

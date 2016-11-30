@@ -2,97 +2,72 @@
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html>
-
-<style>
-body{
-	margin-left:30px;
-}
-</style>
+	<style>
+		#asd {
+		width: 600px;
+		margin-left: 20px; 
+		}
+		</style>
 <head>
 
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-		
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+	crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+	integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+	crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+	integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+	crossorigin="anonymous"></script>
+
+
+
 <title>jQuery Ajax Tutorial</title>
-</head>	
+</head>
 <body>
-		<h1>Welcome!</h1>
-<br>
-		<div class="page-header">
-			<h3>Farm: Uncle Eddys farm</h3>
-		</div>
-		<br>
-		<ul id="chickens"></ul>
-		<br>
-		<div> 
-			<%-- <a  href="<%=request.getContextPath()%>/Eggs/Add/">Add a new egg</a> --%>
-		</div> 
-		
-		
+	<a href="http://localhost:8080/FarmAjax/?language=en">English</a><span> | </span><a href="http://localhost:8080/FarmAjax/?language=es">Español</a>
+
+	<h1><spring:message code="welcome.caption"/></h1>
+	<div class="page-header">
+		<h3><spring:message code="farmName.caption"/></h3>
+	</div>
+	<br>
+	<div id="asd">
+	<table id="chickens" class="table"> 
+		<thead> 
+				<tr> 
+						<th><spring:message code="chicken.caption"/></th> 	
+						<th><spring:message code="quantity.caption"/></th> 
+						<th><spring:message code="deleteAdd.caption"/></th>
+	 			</tr> 
+	 	</thead>  
+	 </table>
+	<br>
+	<button id="addNewChicken"><spring:message code="newchicken.caption"/></button>
+	<div id="formDiv">
+			<spring:message code="newChickenName.caption"/><input type="text" id="chickenName" >
+			<button id="addChicken"><spring:message code="saveNewChicken.caption"/></button>
+	</div>
 	
+	<div id="ErrorChickenName" class="hidden" ><spring:message code="errorNewChicken.caption"/></div>
+	</div>
+	
+	<!-- Archivo Javascript -->
+	
+	<script type="text/javascript" src="<%=request.getContextPath()%>/resources/ajax.js"> </script>
 		
-<%---------------------            [  main.js  ]              archivo Javascript      ------------------------%>
-		
-		
-<script type="text/javascript">
-		
-		$(function(){
-			
-		 	var $chickens= $('#chickens');
-		 	
-		 		$.ajax({
-				type:'GET',
-				url:'/FarmAjax/view/chickens',
-				success: function(chickens){
-					$.each(chickens, function(i, chicken){
-					  $chickens.append('<li>Name: ' +chicken.chickenName+' - Eggs:  '+'<button data-id='+chicken.id+' class="remove">Delete</button></li>');
-					});
-				},
-				error: function(){
-					alert("I'm sorry, there it was a problem trying to load the chicken list, or is empty");
-				}
-			});
-
-			$('#addEgg').on('click', function(){
-
-				var chicken = {
-					chickenName: $chickenName.val(),
-					eggList: $eggList.val(),
-				};
-
-				var egg = {
-					colour: $colour.val(),
-					chickenId: $chickenId.val(),
-				};
-
-				$.ajax({
-					type:'POST',
-					url: '/FarmAjax/add',
-					data: hero,
-						success: function(addEgg){
-					$chickens.append('<li> Chicken:' +addEgg.chickenName+' Eggs: '+addEgg.eggList+'</li>'+'<button data-id='+addEgg.id+' class="remove">Delete</button></li>'); 
-						},
-					error: function(){
-						alert('Error saving a new egg. Please try again');
-					}
-				});
-			});
-			
-		/* 	$chickens.delegate('.remove','click', function(){
-
-				var $li = $(this).closest('li');
-				$.ajax({
-					type: 'DELETE',
-					url: '/FarmAjax/remove/'+$(this).attr("data-id"),
-					success: function(){
-						$li.fadeOut(300, function(){
-							$li.remove();
-						})
-					}
-				})
-			}) */
-		});
-		</script>
 </body>
 </html>
