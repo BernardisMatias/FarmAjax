@@ -75,9 +75,6 @@
 	<!-- DAOs --> 
 	<bean id="ChickenDAO" class="com.accenture.data.ChickenDAO" />
 	
-	
-	
-	
     <bean id="messageSource"
         class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
         <property name="basename" value="classpath:messages" />
